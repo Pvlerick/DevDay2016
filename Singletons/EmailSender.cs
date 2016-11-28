@@ -2,7 +2,7 @@
 
 namespace Singletons
 {
-    public sealed class EmailSender
+    public sealed class EmailSender : IEmailSender
     {
         private static readonly Lazy<EmailSender> lazy =
             new Lazy<EmailSender>(() => new EmailSender());

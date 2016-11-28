@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -17,12 +18,18 @@ namespace Birthdays
                               DateOfBirth = DateTime.Parse(split[1])
                           };
 
+            Print(persons, DateTime.Today, Console.Out);
+        }
+
+        public void Print(IEnumerable<Person> persons,
+            DateTime today, TextWriter output)
+        {
             foreach (var person in persons)
             {
-                if (person.DateOfBirth.Month == DateTime.Now.Month
-                    && person.DateOfBirth.Day == DateTime.Now.Day)
+                if (person.DateOfBirth.Month == today.Month
+                    && person.DateOfBirth.Day == today.Day)
                 {
-                    Console.WriteLine($"Happy Birthday {person.Name}!");
+                    output.WriteLine($"Happy Birthday {person.Name}!");
                 }
             }
         }

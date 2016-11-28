@@ -1,15 +1,32 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Singletons
 {
     public sealed class BirthdaysEmailSender
     {
+        private readonly IEmailSender _emailSender;
+        private readonly IPersonRespository _personRepository;
+
+        public BirthdaysEmailSender() : this(new PersonRepositoryAdapter(),
+            EmailSender.Instance)
+        {
+
+        }
+
+        public BirthdaysEmailSender(IPersonRespository personRepository,
+            IEmailSender emailSender)
+        {
+            _personRepository = personRepository;
+            _emailSender = emailSender;
+        }
+
         public void Send(DateTime today)
         {
-            foreach (var person in PersonRepository.GetAll())
+            foreach (var person in _personRepository.GetAll())
             {
                 if (IsBirthday(person, today))
-                    EmailSender.Instance.Send(person.EmailAddress,
+                    _emailSender.Send(person.EmailAddress,
                         $"Happy Birthday {person.Name}");
             }
         }
@@ -24,6 +41,11 @@ namespace Singletons
                     && person.DateOfBirth.Day == 29
                     && today.Month == 2
                     && today.Day == 28);
+        }
+
+        class PersonRepositoryAdapter : IPersonRespository
+        {
+            public IEnumerable<Person> GetAll() => PersonRepository.GetAll();
         }
     }
 }
