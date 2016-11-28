@@ -46,6 +46,8 @@
   <ItemGroup>
     <Compile Include="BirthdaysEmailSender.cs" />
     <Compile Include="EmailSender.cs" />
+    <Compile Include="IEmailSender.cs" />
+    <Compile Include="IPersonRespository.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="PersonRepository.cs" />
     <Compile Include="Program.cs" />
